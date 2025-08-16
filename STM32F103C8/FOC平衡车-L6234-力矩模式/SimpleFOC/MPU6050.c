@@ -204,7 +204,7 @@ void MPU6050_Init(MPU6050_TypeDef* MPU, I2C_TypeDef* I2Cx) {
 	MPU6050_WriteReg(MPU6050_ACCEL_CONFIG, 0x00, I2Cx);			//加速度计配置寄存器，±2g
 	
 	MPU->gyro_config = 1.0 / (32768.0 / 1000 * 180.0 / _PI);
-	MPU->accel_config = 1.0 / (32768.0 / 4);
+	MPU->accel_config = 1.0 / (32768.0 / 2);
 	MPU->accCoef = 0.02;
    	MPU->gyroCoef = 0.98;
 	MPU->angleY = 0;

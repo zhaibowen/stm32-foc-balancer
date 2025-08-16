@@ -465,11 +465,11 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\objects\startup_stm32f10x_md.d -o.\objects\startup_stm32f10x_md.
-o -ID:\STM32教程\STM32工程\FOC平衡车-L6234-电流模式\RTE\_STM32 -ID:\Keil_v5\ARM
-\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include -ID:\Keil_v5\ARM\CMSIS\Include --
-predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISIO
-N_VERSION SETA 522" --predefine="STM32F10X_MD SETA 1" --list=.\listings\startup
-_stm32f10x_md.lst startup\startup_stm32f10x_md.s
+o -ID:\Git-Project\stm32-foc-balancer\STM32F103C8\FOC平衡车-L6234-电流模式\RTE\
+_STM32 -ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include -ID:\Keil_
+v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1
+" --predefine="__UVISION_VERSION SETA 522" --predefine="STM32F10X_MD SETA 1" --
+list=.\listings\startup_stm32f10x_md.lst startup\startup_stm32f10x_md.s
 
 
 

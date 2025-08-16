@@ -154,12 +154,12 @@ void remote_control_run(float* target_vel, float* target_steering) {
 		NRF24L01_GetRxBuf(Buf);
 		X = Buf[1] * 256 + Buf[0];
 		Y = Buf[3] * 256 + Buf[2];
-		if (X < 2500 && X > 1500) X = 2048;
-		if (X != 2048) { // 前进和转向分开
-			if (Y < 2500 && Y > 1500) Y = 2048;
+		if (Y < 2500 && Y > 1500) Y = 2048;
+		if (Y != 2048) { // 前进和转向分开
+			if (X < 2500 && X > 1500) X = 2048;
 		}
-		*target_vel = -(X - 2048) / 2048.0 * max_vel;
-		*target_steering = (Y - 2048) / 2048.0 * max_steering;
+		*target_vel = -(Y - 2048) / 2048.0 * max_vel;
+		*target_steering = -(X - 2048) / 2048.0 * max_steering;
 	}
 }
 

@@ -2178,34 +2178,34 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       364         28          0          0          0       1878   adc.o
-      2038         84          0          0          0       6936   bldcmotor.o
+       364         28          0          0          0       1938   adc.o
+      2038         84          0          0          0       7152   bldcmotor.o
          0          0          0          0          0       4540   core_cm3.o
-       350         56          0          0          0       1892   currentsensor.o
-       126          0          0          0          0       1042   delay.o
-      1736        134        800          0          0       3948   foc_utils.o
-       184         10          0          0          0        948   iic.o
-        98         16          0          0          0       1452   lowpass_filter.o
-       596         50          0          0          0       2719   magneticsensor.o
-      1872        164         98         28         32       7358   main.o
-       112         12          0          0          0     213292   misc.o
-      1076         90          0          0         12       5812   mpu6050.o
-       878         60         10          0          0       9899   nrf24l01.o
-       474         26          0          0          0       1908   pid.o
-        36          8        236          0       1024        780   startup_stm32f10x_md.o
-       486         24          0          0          0       8150   stm32f10x_adc.o
-       314          0          0          0          0       4004   stm32f10x_gpio.o
-       460         20          0          0          0       7121   stm32f10x_i2c.o
-        26          0          0          0          0       3738   stm32f10x_it.o
-       364         50          0         20          0       5831   stm32f10x_rcc.o
-      1464        156          0          0          0      11526   stm32f10x_tim.o
-       408          6          0          0          0       4758   stm32f10x_usart.o
-       328         28          0          0          0      53177   system_stm32f10x.o
-       524         32          0          8          0       2687   timer.o
-       336         24          0          6        256       3620   usart.o
+       350         56          0          0          0       1952   currentsensor.o
+       126          0          0          0          0       1078   delay.o
+      1736        134        800          0          0       4080   foc_utils.o
+       184         10          0          0          0        988   iic.o
+        98         16          0          0          0       1508   lowpass_filter.o
+       596         50          0          0          0       2791   magneticsensor.o
+      1872        164         98         28         32       7574   main.o
+       112         12          0          0          0     213388   misc.o
+      1076         90          0          0         12       6004   mpu6050.o
+       878         60         10          0          0      10271   nrf24l01.o
+       474         26          0          0          0       1968   pid.o
+        36          8        236          0       1024        804   startup_stm32f10x_md.o
+       486         24          0          0          0       8374   stm32f10x_adc.o
+       314          0          0          0          0       4120   stm32f10x_gpio.o
+       460         20          0          0          0       7333   stm32f10x_i2c.o
+        26          0          0          0          0       3910   stm32f10x_it.o
+       364         50          0         20          0       5987   stm32f10x_rcc.o
+      1464        156          0          0          0      11886   stm32f10x_tim.o
+       408          6          0          0          0       4878   stm32f10x_usart.o
+       328         28          0          0          0      53341   system_stm32f10x.o
+       524         32          0          8          0       2783   timer.o
+       336         24          0          6        256       3712   usart.o
 
     ----------------------------------------------------------------------
-     14682       1078       1180         64       1324     369016   Object Totals
+     14682       1078       1180         64       1324     372360   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         32          0          4          2          0          0   (incl. Padding)
 
@@ -2287,8 +2287,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     20300       1218       1316         68       1324     364404   Grand Totals
-     20300       1218       1316         68       1324     364404   ELF Image Totals
+     20300       1218       1316         68       1324     367748   Grand Totals
+     20300       1218       1316         68       1324     367748   ELF Image Totals
      20300       1218       1316         68          0          0   ROM Totals
 
 ==============================================================================

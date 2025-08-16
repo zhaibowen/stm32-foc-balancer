@@ -3,12 +3,12 @@
         {
             "name": "STM32",
             "includePath": [
-                "d:\\STM32教程\\STM32工程\\FOC平衡车-L6234-电流模式\\lib\\inc",
-                "d:\\STM32教程\\STM32工程\\FOC平衡车-L6234-电流模式\\startup",
-                "d:\\STM32教程\\STM32工程\\FOC平衡车-L6234-电流模式\\Hardware",
-                "d:\\STM32教程\\STM32工程\\FOC平衡车-L6234-电流模式\\SimpleFOC",
-                "d:\\STM32教程\\STM32工程\\FOC平衡车-L6234-电流模式\\user",
-                "d:\\STM32教程\\STM32工程\\FOC平衡车-L6234-电流模式\\lib\\src"
+                "d:\\Git-Project\\stm32-foc-balancer\\STM32F103C8\\FOC平衡车-L6234-电流模式\\lib\\inc",
+                "d:\\Git-Project\\stm32-foc-balancer\\STM32F103C8\\FOC平衡车-L6234-电流模式\\startup",
+                "d:\\Git-Project\\stm32-foc-balancer\\STM32F103C8\\FOC平衡车-L6234-电流模式\\Hardware",
+                "d:\\Git-Project\\stm32-foc-balancer\\STM32F103C8\\FOC平衡车-L6234-电流模式\\SimpleFOC",
+                "d:\\Git-Project\\stm32-foc-balancer\\STM32F103C8\\FOC平衡车-L6234-电流模式\\user",
+                "d:\\Git-Project\\stm32-foc-balancer\\STM32F103C8\\FOC平衡车-L6234-电流模式\\lib\\src"
             ],
             "defines": [
                 "USE_STDPERIPH_DRIVER",
