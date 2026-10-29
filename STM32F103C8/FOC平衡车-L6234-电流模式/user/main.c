@@ -45,10 +45,10 @@ int main(void)
 	TIM2_PWM_Init(Motor1.PWM_Period);
 	TIM3_PWM_Init(Motor2.PWM_Period);
 	TIM4_10us_Init();
-	MagneticSensor_Init(&Encoder1, 1, AS5600_CPR, I2C1);
-	MagneticSensor_Init(&Encoder2, 2, AS5600_CPR, I2C2);
 	I2C_Init_(I2C1, i2c_freq);
 	I2C_Init_(I2C2, i2c_freq);
+	MagneticSensor_Init(&Encoder1, 1, AS5600_CPR, I2C1);
+	MagneticSensor_Init(&Encoder2, 2, AS5600_CPR, I2C2);
 	MPU6050_Init(&MPU, I2C2);
 	printf("MPU ID: %x\r\n", MPU6050_GetID(&MPU));
 	delay_ms(1000);            //Wait for the system to stabilize
