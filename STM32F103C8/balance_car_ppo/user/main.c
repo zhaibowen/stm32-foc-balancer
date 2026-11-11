@@ -21,27 +21,37 @@ float voltage_supply = 8; // V
 float voltage_limit = 2; // V
 float pole_pairs = 7;
 float i2c_freq = 400000; // Hz
+float Kp = 1;
+float Ki = 0;
 
 uint8_t rxBuf[33] = {0};
 uint8_t txBuf[33] = {0};
-uint8_t oled_flag[6] = {0};
 float raw_obs[12] = {0};
 float action[2] = {0};
 float target_current[2] = {0};
 float target_vel = 0;
 float target_steering = 0;
+float time_interval;
 uint32_t tim4_timestamp_prev = 0;
 float tim4_time_interval = 0;
 float tim4_time_interval2 = 0;
 float shaft_angle_M1, shaft_angle_M2;
 float shaft_velocity_M1, shaft_velocity_M2;
+float vq1, vd1, vq2, vd2;
 
 MPU6050_TypeDef MPU;
 LowPassFilter LPF_M1_vel, LPF_M2_vel;
+LowPassFilter LPF_Iq1, LPF_Iq2;
+LowPassFilter LPF_Id1, LPF_Id2;
 Motor Motor1, Motor2;
 ENCODER_TypeDef Encoder1, Encoder2;
 CurrentSensor CS1, CS2;
 PIController PI1q, PI1d, PI2q, PI2d;
+
+uint8_t oled_flag[6] = {0};
+float* oled_num[8] = {&time_interval, &shaft_angle_M1, &target_vel, &action[0], &MPU.pitch, &shaft_angle_M2, &target_steering, &action[1]};
+uint8_t oled_knt[6] = {0};
+
 
 void control_pad_receive(float* target_vel, float* target_steering);
 void control_pad_send(float a1, float a2, float a3, float a4, float a5, float a6, float a7, float a8);
@@ -50,8 +60,8 @@ void commander_run(uint8_t* debug_flag);
 int main(void) {
 	NRF24L01_Init();
 	uart_init(115200);
-	Motor_init(&Motor1, 1, voltage_supply, pole_pairs, -1, 0.10, RCC_APB2Periph_GPIOA, GPIOA, GPIO_Pin_11, 1440, TIM2); // 左轮
-	Motor_init(&Motor2, 2, voltage_supply, pole_pairs, -1, 0.19, RCC_APB2Periph_GPIOA, GPIOA, GPIO_Pin_12, 1440, TIM3); // 右轮
+	Motor_init(&Motor1, 1, voltage_supply, pole_pairs, -1, 6.18, RCC_APB2Periph_GPIOA, GPIOA, GPIO_Pin_11, 1440); // 左轮
+	Motor_init(&Motor2, 2, voltage_supply, pole_pairs, -1, 0.19, RCC_APB2Periph_GPIOA, GPIOA, GPIO_Pin_12, 1440); // 右轮
 	TIM2_PWM_Init(Motor1.PWM_Period);
 	TIM3_PWM_Init(Motor2.PWM_Period);
     DWT_Init();
@@ -67,26 +77,29 @@ int main(void) {
     CurrentSensor_Init(&CS1, 1, ADC_Channel_3, ADC_Channel_4, -1, 1, 20, 0.012);
     CurrentSensor_Init(&CS2, 2, ADC_Channel_5, ADC_Channel_6, -1, 1, 20, 0.012);
 
-	PI_Init(&PI1q, 1, 100, voltage_limit);
-	PI_Init(&PI1d, 1, 100, voltage_limit);
-	PI_Init(&PI2q, 1, 100, voltage_limit);
-	PI_Init(&PI2d, 1, 100, voltage_limit);
+	PI_Init(&PI1q, Kp, Ki, voltage_limit);
+	PI_Init(&PI1d, Kp, Ki, voltage_limit);
+	PI_Init(&PI2q, Kp, Ki, voltage_limit);
+	PI_Init(&PI2d, Kp, Ki, voltage_limit);
     
 	LowPassFilter_init(&LPF_M1_vel, 0.4);
 	LowPassFilter_init(&LPF_M2_vel, 0.4);
+	LowPassFilter_init(&LPF_Iq1, 0.1);
+	LowPassFilter_init(&LPF_Iq2, 0.1);
+	LowPassFilter_init(&LPF_Id1, 0.1);
+	LowPassFilter_init(&LPF_Id2, 0.1);
 
 	Motor_enable(&Motor1);
 	Motor_enable(&Motor2);
   	// printf("Motor ready.\r\n");
 
-	TIM4_1kHz_Init();
     uint8_t calibration = 0;
     while (calibration) {
-        // Motor1.zero_electric_angle = 0;
-        // Motor2.zero_electric_angle = 0;
-        // alignSensor(&Motor1, &Encoder1, txBuf);
-        // alignSensor(&Motor2, &Encoder2, txBuf + 16);
-        // NRF24L01_SendBuf(txBuf);
+        Motor1.zero_electric_angle = 0;
+        Motor2.zero_electric_angle = 0;
+        alignSensor(&Motor1, &Encoder1, txBuf);
+        alignSensor(&Motor2, &Encoder2, txBuf + 16);
+        NRF24L01_SendBuf(txBuf);
         
         // MPU6050_CalcGyroOffsets(&MPU);
         // control_pad_send(MPU6050_GetID(&MPU), MPU.gyroXoffset, MPU.gyroYoffset, MPU.gyroZoffset, 0, 0, 0, MPU.AccZoffset);
@@ -102,13 +115,14 @@ int main(void) {
         delay_ms(100);
     }
 
+	TIM4_1kHz_Init();
     MPU.timestamp_prev = 0;
     Encoder1.timestamp_prev = 0;
     Encoder2.timestamp_prev = 0;
 	uint32_t timestamp_prev = 0;
 	int pknt = 0;
     while(1) {
-        float time_interval = get_time_interval(&timestamp_prev);
+        time_interval = get_time_interval(&timestamp_prev);
 		MPU6050_Update(&MPU);		//获取MPU6050的数据
 
         raw_obs[0] = MPU.GyroX;
@@ -127,11 +141,15 @@ int main(void) {
         target_current[0] = action[0] * 2;
         target_current[1] = action[1] * 2;
 
+        target_current[0] = 0.5;
+        target_current[1] = 0.5;
+
         control_pad_receive(&target_vel, &target_steering);
         // commander_run(&calibration);
         pknt++;
-        if (pknt > 10) {
-            control_pad_send(time_interval, shaft_angle_M1, target_vel, action[0], MPU.pitch, shaft_angle_M2, target_steering, action[1]);
+        if (pknt > 100) {
+            // control_pad_send(*oled_num[0], *oled_num[1], *oled_num[2], *oled_num[3], *oled_num[4], *oled_num[5], *oled_num[6], *oled_num[7]);
+            control_pad_send(time_interval, 0, CS1.ia, target_current[0], MPU.pitch, 0, CS1.ib, target_current[1]);
             // printf("%.5f, %.4f, %.4f, %.4f,   %.4f, %.4f, %.4f,   %.4f, %.4f, %.4f,   %.4f, %.4f, %.4f,   %.4f, %.4f, %.4f\r\n", time_interval, 
             //     MPU.AccX, MPU.AccY, MPU.AccZ, MPU.GyroX, MPU.GyroY, MPU.GyroZ, MPU.GravX, MPU.GravY, MPU.GravZ, MPU.roll, MPU.pitch, MPU.yaw, MPU.gyroXoffset, MPU.gyroYoffset, MPU.gyroZoffset);
             // printf("%.5f, %.4f, %.4f,   %.4f, %.4f, %.4f,   %.4f, %.4f, %.4f,   %.4f, %.4f,   %.4f, %.4f,   %.4f, %.4f\r\n", time_interval, 
@@ -148,14 +166,10 @@ void TIM4_IRQHandler(void)
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET)
 	{
 	    TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
-        // tim4_time_interval = get_time_interval(&tim4_timestamp_prev);
+        tim4_time_interval = get_time_interval(&tim4_timestamp_prev);
         
 		shaft_angle_M1 = getAngle(&Encoder1);
 		shaft_angle_M2 = getAngle(&Encoder2);
-		shaft_velocity_M1 = getVelocity(&Encoder1, shaft_angle_M1);
-		shaft_velocity_M2 = -getVelocity(&Encoder2, shaft_angle_M2);
-    	shaft_velocity_M1 = getLowPassFilter(&LPF_M1_vel, shaft_velocity_M1);
-    	shaft_velocity_M2 = getLowPassFilter(&LPF_M2_vel, shaft_velocity_M2);
         
 		float elec_angle_M1 = electricalAngle(&Motor1, shaft_angle_M1);
 		float elec_angle_M2 = electricalAngle(&Motor2, shaft_angle_M2);
@@ -168,15 +182,26 @@ void TIM4_IRQHandler(void)
 		getPhaseCurrents(&CS2);
 		cal_Iq_Id(&CS1, cos_angle_M1, sin_angle_M1);
 		cal_Iq_Id(&CS2, cos_angle_M2, sin_angle_M2);
+    	CS1.Iq = getLowPassFilter(&LPF_Iq1, CS1.Iq);
+    	CS2.Iq = getLowPassFilter(&LPF_Iq2, CS2.Iq);
+    	CS1.Id = getLowPassFilter(&LPF_Id1, CS1.Id);
+    	CS2.Id = getLowPassFilter(&LPF_Id2, CS2.Id);
         
-		float vq1 = getPI(&PI1q, target_current[0] - CS1.Iq);
-		float vd1 = getPI(&PI1d,                   - CS1.Id);
-		float vq2 = getPI(&PI2q, target_current[1] - CS2.Iq);
-		float vd2 = getPI(&PI2d,                   - CS2.Id);
+		vq1 = getPI(&PI1q, target_current[0] - CS1.Iq);
+		vd1 = getPI(&PI1d,                   - CS1.Id);
+		vq2 = getPI(&PI2q, target_current[1] - CS2.Iq);
+		vd2 = getPI(&PI2d,                   - CS2.Id);
+        vd1 = 0;
+        vd2 = 0;
 
   		setPhaseVoltage(&Motor1, vq1, vd1, cos_angle_M1, sin_angle_M1);
   		setPhaseVoltage(&Motor2, vq2, vd2, cos_angle_M2, sin_angle_M2);
-        // tim4_time_interval2 = get_time_interval(&tim4_timestamp_prev);
+        
+		shaft_velocity_M1 = getVelocity(&Encoder1, shaft_angle_M1);
+		shaft_velocity_M2 = -getVelocity(&Encoder2, shaft_angle_M2);
+    	shaft_velocity_M1 = getLowPassFilter(&LPF_M1_vel, shaft_velocity_M1);
+    	shaft_velocity_M2 = getLowPassFilter(&LPF_M2_vel, shaft_velocity_M2);
+        tim4_time_interval2 = get_time_interval(&tim4_timestamp_prev);
 	}
 }
 
@@ -190,8 +215,32 @@ void control_pad_receive(float* target_vel, float* target_steering) {
         if (X < 2150 && X > 1950) X = 2048;
 		*target_vel = -(Y - 2048) / 2048.0 * max_vel;
 		*target_steering = -(X - 2048) / 2048.0 * max_steering;
-        if (rxBuf[8] == 0) {
+        if (rxBuf[8] == 0 && oled_knt[0] == 0) {
             oled_flag[0] = (oled_flag[0] + 1) % 2;
+            oled_num[0] = oled_flag[0] ? &tim4_time_interval2 : &time_interval;
+            oled_knt[0] = 10;
+        }
+        if (rxBuf[9] == 0 && oled_knt[1] == 0) {
+            oled_flag[1] = (oled_flag[1] + 1) % 3;
+            if (oled_flag[1] == 0) {
+                oled_num[4] = &MPU.pitch;
+            } else if (oled_flag[1] == 1) {
+                oled_num[4] = &MPU.roll;
+            } else if (oled_flag[1] == 2) {
+                oled_num[4] = &MPU.yaw;
+            }
+            oled_knt[1] = 10;
+        }
+        if (rxBuf[10] == 0 && oled_knt[2] == 0) {
+            oled_flag[2] = (oled_flag[2] + 1) % 2;
+            oled_num[1] = oled_flag[2] ? &shaft_velocity_M1 : &shaft_angle_M1;
+            oled_num[5] = oled_flag[2] ? &shaft_velocity_M2 : &shaft_angle_M2;
+            oled_knt[2] = 10;
+        }
+        for (int i = 0; i < 6; i++) {
+            if (oled_knt[i]) {
+                oled_knt[i]--;
+            }
         }
 	}
 }

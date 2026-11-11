@@ -7,7 +7,7 @@
 #include "BLDCMotor.h"
 #include "NRF24L01.h"
 
-void Motor_init(Motor* Motorx, uint8_t number, float vs, float pp, int8_t sd, float zea, uint32_t periph, GPIO_TypeDef* gpio, uint16_t pin, uint16_t pwm, TIM_TypeDef* TIMx) {
+void Motor_init(Motor* Motorx, uint8_t number, float vs, float pp, int8_t sd, float zea, uint32_t periph, GPIO_TypeDef* gpio, uint16_t pin, uint16_t pwm) {
 	Motorx->number = number;
 	Motorx->inv_voltage_power_supply = 1.0 / vs;
 	Motorx->pole_pairs = pp;
@@ -16,7 +16,6 @@ void Motor_init(Motor* Motorx, uint8_t number, float vs, float pp, int8_t sd, fl
 	Motorx->gpio = gpio;
 	Motorx->pin = pin;
 	Motorx->PWM_Period = pwm;
-    Motorx->TIMx = TIMx;
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd(periph, ENABLE);
@@ -51,28 +50,29 @@ void setPhaseVoltage(Motor* Motorx, float Uq, float Ud, float ct, float st) {
 	Ub = _constrain(Ub, 0, 1);
 	Uc = _constrain(Uc, 0, 1);
 
-	TIM_SetCompare1(TIM2, Ua * Motorx->PWM_Period);
-	TIM_SetCompare2(TIM2, Ub * Motorx->PWM_Period);
-	TIM_SetCompare3(TIM2, Uc * Motorx->PWM_Period);
+	if (Motorx->number == 1) {
+		TIM_SetCompare1(TIM2, Ua * Motorx->PWM_Period);
+		TIM_SetCompare2(TIM2, Ub * Motorx->PWM_Period);
+		TIM_SetCompare3(TIM2, Uc * Motorx->PWM_Period);
+	} else if (Motorx->number == 2) {
+		TIM_SetCompare2(TIM3, Ua * Motorx->PWM_Period);
+		TIM_SetCompare3(TIM3, Ub * Motorx->PWM_Period);
+		TIM_SetCompare4(TIM3, Uc * Motorx->PWM_Period);
+	}
 }
 
 int alignSensor(Motor* Motorx, ENCODER_TypeDef* Encoderx, uint8_t* txBuf) {
     float cos_angle = _cos(_3PI_2);
     float sin_angle = _sin(_3PI_2);
-	setPhaseVoltage(Motorx, 0.5, 0, cos_angle, sin_angle);  //计算零点偏移角度
+	setPhaseVoltage(Motorx, 1, 0, cos_angle, sin_angle);  //计算零点偏移角度
 	delay_ms(500);
     float shaft_angle = _normalizeAngle(getAngle(Encoderx));
 	float zero_electric_angle = _normalizeAngle(_electricalAngle(Motorx->sensor_direction * shaft_angle, Motorx->pole_pairs));
-    if (zero_electric_angle > 3) {
-        zero_electric_angle -= _2PI;
-    }
-	delay_ms(500);
 
 	float num = Motorx->number;
     memcpy(txBuf, &num, 4);
     memcpy(txBuf + 4, &shaft_angle, 4);
     memcpy(txBuf + 8, &zero_electric_angle, 4);
-    memcpy(txBuf + 12, &Motorx->zero_electric_angle, 4);
 	
 	return 1;
 }

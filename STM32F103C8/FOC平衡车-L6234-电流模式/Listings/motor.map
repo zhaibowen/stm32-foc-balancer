@@ -401,9 +401,9 @@ Section Cross References
     main.o(i.main) refers to timer.o(i.TIM2_PWM_Init) for TIM2_PWM_Init
     main.o(i.main) refers to timer.o(i.TIM3_PWM_Init) for TIM3_PWM_Init
     main.o(i.main) refers to timer.o(i.TIM4_10us_Init) for TIM4_10us_Init
-    main.o(i.main) refers to magneticsensor.o(i.MagneticSensor_Init) for MagneticSensor_Init
     main.o(i.main) refers to ffixui.o(.text) for __aeabi_f2uiz
     main.o(i.main) refers to iic.o(i.I2C_Init_) for I2C_Init_
+    main.o(i.main) refers to magneticsensor.o(i.MagneticSensor_Init) for MagneticSensor_Init
     main.o(i.main) refers to mpu6050.o(i.MPU6050_Init) for MPU6050_Init
     main.o(i.main) refers to mpu6050.o(i.MPU6050_GetID) for MPU6050_GetID
     main.o(i.main) refers to printfa.o(i.__0printf) for __2printf

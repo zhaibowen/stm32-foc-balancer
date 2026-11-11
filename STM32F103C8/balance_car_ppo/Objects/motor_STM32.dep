@@ -885,7 +885,7 @@ I (Hardware\Delay.h)(0x688C8B2C)
 F (.\SimpleFOC\foc_utils.c)(0x6AED2728)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\foc_utils.o --omf_browse .\objects\foc_utils.crf --depend .\objects\foc_utils.d)
 I (SimpleFOC\foc_utils.h)(0x6AED2730)
 I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x57F606B6)
-F (.\SimpleFOC\BLDCMotor.c)(0x6AEFF465)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\bldcmotor.o --omf_browse .\objects\bldcmotor.crf --depend .\objects\bldcmotor.d)
+F (.\SimpleFOC\BLDCMotor.c)(0x6AF31100)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\bldcmotor.o --omf_browse .\objects\bldcmotor.crf --depend .\objects\bldcmotor.d)
 I (.\startup\stm32f10x.h)(0x688C8B2D)
 I (.\startup\core_cm3.h)(0x688C8B2D)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F606B8)
@@ -920,11 +920,11 @@ I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x57F606B6)
 I (.\Hardware\usart.h)(0x688C8B2C)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F606B8)
 I (.\Hardware\delay.h)(0x688C8B2C)
-I (SimpleFOC\BLDCMotor.h)(0x6AEFF21C)
+I (SimpleFOC\BLDCMotor.h)(0x6AF30FC7)
 I (SimpleFOC\MagneticSensor.h)(0x6AF17438)
-I (SimpleFOC\CurrentSensor.h)(0x6AEFE631)
+I (SimpleFOC\CurrentSensor.h)(0x6AF3D2AC)
 I (.\Hardware\NRF24L01.h)(0x688C8B2C)
-F (.\SimpleFOC\MagneticSensor.c)(0x6AF17B55)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\magneticsensor.o --omf_browse .\objects\magneticsensor.crf --depend .\objects\magneticsensor.d)
+F (.\SimpleFOC\MagneticSensor.c)(0x6AF3CCC7)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\magneticsensor.o --omf_browse .\objects\magneticsensor.crf --depend .\objects\magneticsensor.d)
 I (.\startup\stm32f10x.h)(0x688C8B2D)
 I (.\startup\core_cm3.h)(0x688C8B2D)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F606B8)
@@ -993,8 +993,8 @@ I (SimpleFOC\lowpass_filter.h)(0x6AEBEFC2)
 I (.\Hardware\timer.h)(0x6AF13590)
 F (.\SimpleFOC\pid.c)(0x6AEDB2CF)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\pid.o --omf_browse .\objects\pid.crf --depend .\objects\pid.d)
 I (SimpleFOC\PID.h)(0x6AEDB22A)
-F (.\SimpleFOC\CurrentSensor.c)(0x6AEFE628)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\currentsensor.o --omf_browse .\objects\currentsensor.crf --depend .\objects\currentsensor.d)
-I (SimpleFOC\CurrentSensor.h)(0x6AEFE631)
+F (.\SimpleFOC\CurrentSensor.c)(0x6AF3D2BD)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\currentsensor.o --omf_browse .\objects\currentsensor.crf --depend .\objects\currentsensor.d)
+I (SimpleFOC\CurrentSensor.h)(0x6AF3D2AC)
 I (.\startup\stm32f10x.h)(0x688C8B2D)
 I (.\startup\core_cm3.h)(0x688C8B2D)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F606B8)
@@ -1070,7 +1070,7 @@ F (.\SimpleFOC\policy.c)(0x6AE3FB1E)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICRO
 I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x57F606B6)
 I (SimpleFOC\policy.h)(0x6AE3FAC2)
 I (SimpleFOC\model_weights.h)(0x6AE3410C)
-F (.\user\main.c)(0x6AF184F8)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\user\main.c)(0x6AF3D939)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\startup\stm32f10x.h)(0x688C8B2D)
 I (.\startup\core_cm3.h)(0x688C8B2D)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F606B8)
@@ -1111,9 +1111,9 @@ I (.\SimpleFOC\PID.h)(0x6AEDB22A)
 I (.\SimpleFOC\policy.h)(0x6AE3FAC2)
 I (.\SimpleFOC\foc_utils.h)(0x6AED2730)
 I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x57F606B6)
-I (.\SimpleFOC\BLDCmotor.h)(0x6AEFF21C)
+I (.\SimpleFOC\BLDCmotor.h)(0x6AF30FC7)
 I (.\SimpleFOC\MagneticSensor.h)(0x6AF17438)
-I (.\SimpleFOC\CurrentSensor.h)(0x6AEFE631)
+I (.\SimpleFOC\CurrentSensor.h)(0x6AF3D2AC)
 I (.\SimpleFOC\MPU6050.h)(0x6AF135AD)
 I (.\Hardware\NRF24L01.h)(0x688C8B2C)
 F (.\user\stm32f10x_it.c)(0x688C8B2D)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\lib\inc -I .\startup -I .\Hardware -I .\SimpleFOC -I .\user-ID:\Git-Project\stm32-foc-balancer\STM32F103C8\balance_car_ppo\RTE\_STM32-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD-o .\objects\stm32f10x_it.o --omf_browse .\objects\stm32f10x_it.crf --depend .\objects\stm32f10x_it.d)
